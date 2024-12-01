@@ -15,11 +15,13 @@ def save_to_json(filename: str, data: dict | list) -> None:
 )
 @click.option(
     "-s",
+    "--server",
     type=click.Choice(("local", "prod")),
     default="local",
 )
-def get_data_from_server(server: str):
-    result = get_data(server=server)
+@click.option("-t", "--token")
+def get_data_from_server(server: str, token: str):
+    result = get_data(server=server, token=token)
     save_to_json("files/data.json", result)
 
     print("Result:")

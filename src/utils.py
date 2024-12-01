@@ -15,9 +15,12 @@ class Api:
     _server: str = None
     _endpoint: str = None
 
-    def __init__(self, server: str = None, endpoint: str = None) -> None:
+    def __init__(
+        self, server: str = None, endpoint: str = None, token: str = None
+    ) -> None:
         self.server = server
         self.endpoint = endpoint
+        self.token = token
 
     @property
     def server(self):
@@ -36,7 +39,11 @@ class Api:
         self._endpoint = ENDPOINTS[endpoint]
 
     def get_data(self) -> requests.Response:
+        headers = HEADERS
+        headers["Authorization"] = headers["Authorization"].format(token=self.token)
         response = requests.get(
-            f"{self.server}{self.endpoint}", headers=HEADERS, auth=HttpNegotiateAuth()
+            f"{self.server}{self.endpoint}",
+            headers=headers,
+            auth=HttpNegotiateAuth(),
         )
         return response

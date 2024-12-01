@@ -1,8 +1,8 @@
 from .utils import ENDPOINTS, Api
 
 
-def get_data(server: str = "local") -> dict[str, list]:
-    api = Api(server=server)
+def get_data(server: str = "local", token: str = "") -> dict[str, list]:
+    api = Api(server=server, token=token)
     api.endpoint = ENDPOINTS["get_data"]
 
     response = api.get_data()
